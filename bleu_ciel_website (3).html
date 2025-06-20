@@ -1,0 +1,2434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bleu Ciel Brew - Premium Coffee Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2D3748;
+            scroll-behavior: smooth;
+            background: #FAFAFA;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: #33578D;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1A202C;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #4A5568;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #33578D;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            background: #33578D;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cart-icon:hover {
+            background: #2A4A7C;
+            transform: translateY(-1px);
+        }
+
+        .cart-count {
+            background: #E53E3E;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 20px;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            z-index: 2500;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .cart-content {
+            background: white;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 700px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #E2E8F0;
+        }
+
+        .cart-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1A202C;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            background: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid #E2E8F0;
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item-info h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1A202C;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-details {
+            display: flex;
+            gap: 1rem;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .cart-qty-btn {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: #F7FAFC;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #33578D;
+            transition: all 0.3s ease;
+        }
+
+        .cart-qty-btn:hover {
+            background: #33578D;
+            color: white;
+        }
+
+        .cart-item-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #33578D;
+        }
+
+        .remove-item {
+            background: #FED7D7;
+            color: #E53E3E;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .remove-item:hover {
+            background: #E53E3E;
+            color: white;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #718096;
+        }
+
+        .cart-empty-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-summary {
+            background: #F7FAFC;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #33578D;
+            border-top: 2px solid #E2E8F0;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .cart-checkout {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .continue-shopping {
+            flex: 1;
+            background: #E2E8F0;
+            color: #4A5568;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-shopping:hover {
+            background: #CBD5E0;
+        }
+
+        .checkout-btn {
+            flex: 2;
+            background: #33578D;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #2A4A7C;
+        }
+
+        .checkout-btn:disabled {
+            background: #CBD5E0;
+            cursor: not-allowed;
+        }
+
+        .search-bar {
+            padding: 0.75rem 1rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            outline: none;
+            width: 240px;
+            background: white;
+            color: #2D3748;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            border-color: #33578D;
+            box-shadow: 0 0 0 3px rgba(51, 87, 141, 0.1);
+        }
+
+        .search-bar::placeholder {
+            color: #A0AEC0;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: #33578D;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1A202C;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: #718096;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+        }
+
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            font-size: 1.125rem;
+            color: #4A5568;
+            line-height: 1.8;
+        }
+
+        /* Menu Section */
+        .menu {
+            background: #F7FAFC;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .menu-category {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #E2E8F0;
+        }
+
+        .category-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1A202C;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-subtitle {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #F1F5F9;
+            gap: 1rem;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1A202C;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-description {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .item-variants {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .variant-tag {
+            background: #EDF2F7;
+            color: #4A5568;
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: #33578D;
+            font-size: 1.125rem;
+            text-align: right;
+            min-width: 120px;
+        }
+
+        .info-btn, .buy-btn {
+            background: #F0F7FF;
+            color: #33578D;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .buy-btn {
+            background: #33578D;
+            color: white;
+        }
+
+        .info-btn:hover {
+            background: #33578D;
+            color: white;
+        }
+
+        .buy-btn:hover {
+            background: #2A4A7C;
+            transform: translateY(-1px);
+        }
+
+        .item-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #A0AEC0;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #4A5568;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1A202C;
+            margin-bottom: 1rem;
+        }
+
+        .modal-description {
+            color: #4A5568;
+            line-height: 1.6;
+        }
+
+        /* Purchase Form */
+        .purchase-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #2D3748;
+            font-size: 0.9rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            padding: 0.75rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #33578D;
+            box-shadow: 0 0 0 3px rgba(51, 87, 141, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .variant-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .variant-option {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .variant-option.selected {
+            border-color: #33578D;
+            background: #F0F7FF;
+            color: #33578D;
+            font-weight: 600;
+        }
+
+        .variant-option:hover {
+            border-color: #33578D;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #E2E8F0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #33578D;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: #F0F7FF;
+            border-color: #33578D;
+        }
+
+        .qty-display {
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .price-summary {
+            background: #F7FAFC;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #33578D;
+        }
+
+        .submit-btn {
+            background: #33578D;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #2A4A7C;
+            transform: translateY(-1px);
+        }
+
+        /* Payment Page */
+        .payment-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 3000;
+            overflow-y: auto;
+        }
+
+        .payment-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .payment-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1A202C;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-timer {
+            background: #FED7D7;
+            color: #E53E3E;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .timer-text {
+            font-size: 1.5rem;
+        }
+
+        .qris-container {
+            text-align: center;
+            background: #F7FAFC;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .qris-image {
+            width: 250px;
+            height: 250px;
+            background: #E2E8F0;
+            border-radius: 12px;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .order-summary {
+            background: white;
+            border: 1px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1A202C;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #33578D;
+        }
+
+        .payment-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            flex: 1;
+            background: #E2E8F0;
+            color: #4A5568;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #CBD5E0;
+        }
+
+        .confirm-btn {
+            flex: 2;
+            background: #48BB78;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-btn:hover {
+            background: #38A169;
+        }
+
+        /* Invoice Page */
+        .invoice-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 3000;
+            overflow-y: auto;
+        }
+
+        .invoice-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #48BB78;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .invoice-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1A202C;
+            margin-bottom: 0.5rem;
+        }
+
+        .invoice-details {
+            background: #F7FAFC;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .invoice-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .invoice-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #33578D;
+        }
+
+        .new-order-btn {
+            width: 100%;
+            background: #33578D;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .new-order-btn:hover {
+            background: #2A4A7C;
+        }
+
+        /* Location Section */
+        .location {
+            background: white;
+        }
+
+        .location-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .location-details {
+            background: #F7FAFC;
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 1rem 0;
+            font-size: 1.125rem;
+            color: #4A5568;
+        }
+
+        .location-icon {
+            color: #33578D;
+            font-size: 1.25rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #F7FAFC;
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .whatsapp-btn {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Search Results */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1001;
+            border: 1px solid #E2E8F0;
+            margin-top: 0.5rem;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #F1F5F9;
+            cursor: pointer;
+            color: #4A5568;
+            transition: background 0.3s ease;
+        }
+
+        .search-result-item:hover {
+            background: #F7FAFC;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .search-bar {
+                width: 120px;
+            }
+            
+            .cart-icon {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 4rem 1rem;
+            }
+
+            .menu-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .item-price {
+                text-align: left;
+                min-width: auto;
+            }
+            
+            .cart-content {
+                margin: 5% auto;
+                width: 95%;
+                padding: 1.5rem;
+            }
+            
+            .cart-checkout {
+                flex-direction: column;
+            }
+            
+            .cart-item-controls {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#home" class="logo">
+                <div class="logo-icon">BC</div>
+                <span class="logo-text">BLEU CIEL BREW</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#location">Location</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="cart-icon" onclick="openCart()">
+                    🛒 <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <div class="search-container">
+                    <input type="text" class="search-bar" placeholder="Cari minuman..." id="searchInput">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>BLEU CIEL BREW</h1>
+                <p>Premium coffee experience yang diciptakan oleh mahasiswa Podomoro untuk semua pencinta kopi berkualitas</p>
+                <a href="#menu" class="cta-button">Explore Menu</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section about">
+            <div class="container">
+                <h2 class="section-title">Tentang Kami</h2>
+                <p class="section-subtitle">Passion untuk kopi berkualitas tinggi</p>
+                <div class="about-content">
+                    <p>
+                        Bleu Ciel Brew adalah merek yang diciptakan oleh mahasiswa Podomoro University 
+                        yang menyajikan berbagai pilihan beverage berupa coffee dan non-coffee. 
+                        Kami berkomitmen untuk memberikan pengalaman minum yang istimewa dengan 
+                        kualitas premium dan cita rasa yang dapat divariasikan sesuai selera Anda. 
+                        Setiap cangkir yang kami sajikan dibuat dengan penuh passion dan dedikasi 
+                        untuk memberikan pengalaman terbaik bagi para penikmat kopi dan minuman berkualitas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu" class="section menu">
+            <div class="container">
+                <h2 class="section-title">Our Menu</h2>
+                <p class="section-subtitle">Pilihan terbaik untuk setiap selera</p>
+                
+                <div class="menu-grid">
+                    <!-- Coffee Menu -->
+                    <div class="menu-category">
+                        <div class="category-header">
+                            <h3 class="category-title">☕ Coffee</h3>
+                            <p class="category-subtitle">Premium quality coffee with authentic taste</p>
+                        </div>
+                        
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Espresso</h4>
+                                <p class="item-description">Using 100% Arabica coffee beans</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Espresso', 'Kopi espresso murni menggunakan biji kopi 100% Arabica yang dipanggang dengan sempurna untuk memberikan rasa yang kuat dan aroma yang menggugah selera.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Espresso', 5000, false)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">Rp 5.000</div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Cafe Latte</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">UHT milk and espresso</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Cafe Latte', 'Perpaduan sempurna antara espresso berkualitas tinggi dengan susu UHT yang creamy, menghasilkan rasa yang lembut dan balance.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Cafe Latte', {hot: 15000, iced: 18000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 15.000<br>
+                                Iced: Rp 18.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Shaken Americano</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Shaken espresso with foam on top</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Shaken Americano', 'Espresso yang di-shake dengan teknik khusus menghasilkan foam alami di atasnya, memberikan tekstur yang unik dan rasa yang lebih smooth.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Shaken Americano', {hot: 12000, iced: 16000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 12.000<br>
+                                Iced: Rp 16.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Mochaccino</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Espresso, chocolate and UHT milk</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Mochaccino', 'Kombinasi harmonis antara espresso, coklat premium, dan susu UHT yang menghasilkan cita rasa manis dan pahit yang seimbang.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Mochaccino', {hot: 18000, iced: 20000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 18.000<br>
+                                Iced: Rp 20.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Matcha Coffee</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Espresso, matcha and oat milk</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Matcha Coffee', 'Fusion unik antara espresso dengan matcha premium dan susu oat, menciptakan rasa yang eksotis dan creamy dengan sentuhan Jepang.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Matcha Coffee', {hot: 22000, iced: 25000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 22.000<br>
+                                Iced: Rp 25.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Caramel Latte</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Caramel sauce and espresso</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Caramel Latte', 'Espresso berkualitas tinggi yang dipadukan dengan caramel sauce yang kaya, menghasilkan rasa manis yang indulgent.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Caramel Latte', {hot: 20000, iced: 23000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 20.000<br>
+                                Iced: Rp 23.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Cafe Latte Gula Aren</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Palm sugar and espresso</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Cafe Latte Gula Aren', 'Cita rasa tradisional Indonesia dengan espresso yang dipermanis menggunakan gula aren asli, memberikan rasa manis alami yang khas.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Cafe Latte Gula Aren', {hot: 20000, iced: 23000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 20.000<br>
+                                Iced: Rp 23.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Orange Coffee</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Iced Only</span>
+                                </div>
+                                <p class="item-description">Sunkist orange and espresso</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Orange Coffee', 'Inovasi segar dengan perpaduan espresso dan orange sunkist yang memberikan sensasi citrus yang menyegarkan dan unik.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Orange Coffee', 18000, false)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">Rp 18.000</div>
+                        </div>
+                    </div>
+
+                    <!-- Non-Coffee Menu -->
+                    <div class="menu-category">
+                        <div class="category-header">
+                            <h3 class="category-title">🥤 Non Coffee</h3>
+                            <p class="category-subtitle">Fresh beverages without caffeine</p>
+                        </div>
+                        
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Oat Matcha Latte</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Matcha and oat milk</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Oat Matcha Latte', 'Matcha premium Jepang yang dipadukan dengan susu oat yang creamy, menciptakan minuman yang sehat dan nikmat.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Oat Matcha Latte', {hot: 22000, iced: 25000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 22.000<br>
+                                Iced: Rp 25.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Chocolate</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Chocolate and UHT milk</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Chocolate', 'Coklat premium yang dipadukan dengan susu UHT untuk menghasilkan minuman coklat yang kaya dan creamy.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Chocolate', {hot: 18000, iced: 20000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 18.000<br>
+                                Iced: Rp 20.000
+                            </div>
+                        </div>
+
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h4 class="item-name">Chocolate Mint</h4>
+                                <div class="item-variants">
+                                    <span class="variant-tag">Hot</span>
+                                    <span class="variant-tag">Iced</span>
+                                </div>
+                                <p class="item-description">Chocolate and mint</p>
+                                <div class="item-buttons">
+                                    <button class="info-btn" onclick="showInfo('Chocolate Mint', 'Perpaduan coklat premium dengan mint segar yang memberikan sensasi dingin dan menyegarkan di setiap tegukan.')">Info</button>
+                                    <button class="buy-btn" onclick="openPurchaseModal('Chocolate Mint', {hot: 20000, iced: 23000}, true)">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="item-price">
+                                Hot: Rp 20.000<br>
+                                Iced: Rp 23.000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section id="location" class="section location">
+            <div class="container">
+                <h2 class="section-title">Visit Us</h2>
+                <p class="section-subtitle">Temukan kami di lokasi yang strategis</p>
+                
+                <div class="location-content">
+                    <div class="location-details">
+                        <div class="location-item">
+                            <span class="location-icon">📍</span>
+                            <span>Renjana, APL TOWER 5th Floor</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="location-icon">🏢</span>
+                            <span>Podomoro University</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 2rem; font-size: 1.125rem; color: #718096;">
+                        Kunjungi kami untuk merasakan pengalaman kopi yang tak terlupakan!
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Ada pertanyaan atau ingin memesan? Hubungi kami!</p>
+                
+                <div class="contact-content">
+                    <p style="margin-bottom: 1.5rem; font-size: 1.125rem; color: #4A5568;">
+                        Tim kami siap membantu Anda dengan layanan terbaik
+                    </p>
+                    <a href="https://wa.me/6287823551636" class="whatsapp-btn" target="_blank">
+                        💬 Chat via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3 class="cart-title">🛒 Your Cart</h3>
+                <span class="modal-close" onclick="closeCart()">&times;</span>
+            </div>
+            
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be populated here -->
+            </div>
+            
+            <div class="cart-empty" id="cartEmpty" style="display: none;">
+                <div class="cart-empty-icon">🛒</div>
+                <h3>Your cart is empty</h3>
+                <p>Add some delicious beverages to get started!</p>
+            </div>
+            
+            <div class="cart-summary" id="cartSummary" style="display: none;">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">Rp 0</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">Rp 0</span>
+                </div>
+            </div>
+            
+            <div class="cart-checkout">
+                <button class="continue-shopping" onclick="closeCart()">Continue Shopping</button>
+                <button class="checkout-btn" id="checkoutBtn" onclick="proceedToCheckout()" disabled>Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p class="modal-description" id="modalDescription"></p>
+        </div>
+    </div>
+
+    <!-- Purchase Modal -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closePurchaseModal()">&times;</span>
+            <h3 class="modal-title" id="purchaseTitle">Add to Cart</h3>
+            
+            <form class="purchase-form" id="purchaseForm">
+                <div class="form-group">
+                    <label class="form-label">Selected Item:</label>
+                    <div id="selectedItem" style="font-weight: 600; color: #33578D;"></div>
+                </div>
+
+                <div class="form-group" id="variantGroup" style="display: none;">
+                    <label class="form-label">Choose Temperature:</label>
+                    <div class="variant-options">
+                        <div class="variant-option" data-variant="hot" onclick="selectVariant('hot')">
+                            🔥 Hot
+                        </div>
+                        <div class="variant-option" data-variant="iced" onclick="selectVariant('iced')">
+                            🧊 Iced
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Quantity:</label>
+                    <div class="quantity-controls">
+                        <button type="button" class="qty-btn" onclick="changeQuantity(-1)">-</button>
+                        <div class="qty-display" id="quantity">1</div>
+                        <button type="button" class="qty-btn" onclick="changeQuantity(1)">+</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Special Request (Optional):</label>
+                    <textarea class="form-textarea" id="specialRequest" placeholder="Extra sugar, less ice, etc."></textarea>
+                </div>
+
+                <div class="price-summary">
+                    <span>Item Price:</span>
+                    <span class="total-price" id="totalPrice">Rp 0</span>
+                </div>
+
+                <button type="submit" class="submit-btn">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeCheckoutModal()">&times;</span>
+            <h3 class="modal-title">Complete Your Order</h3>
+            
+            <form class="purchase-form" id="checkoutForm">
+                <div class="form-group">
+                    <label class="form-label">WhatsApp Number:</label>
+                    <input type="tel" class="form-input" id="checkoutWhatsapp" placeholder="628123456789" required>
+                    <small style="color: #718096;">Invoice will be sent to this number</small>
+                </div>
+                
+                <div class="cart-summary">
+                    <h4 style="margin-bottom: 1rem;">Order Summary</h4>
+                    <div id="checkoutItems"></div>
+                    <div class="summary-row summary-total" style="margin-top: 1rem;">
+                        <span><strong>Total:</strong></span>
+                        <span id="checkoutTotal">Rp 0</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div id="paymentPage" class="payment-page">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h2 class="payment-title">Complete Your Payment</h2>
+                <div class="payment-timer">
+                    <div>⏰ Time remaining:</div>
+                    <div class="timer-text" id="paymentTimer">10:00</div>
+                </div>
+            </div>
+
+            <div class="qris-container">
+                <h3>Scan QR Code to Pay</h3>
+                <div class="qris-image" id="qrisImage" style="background: #f8f9fa; border: 2px dashed #cbd5e0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #718096;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📱</div>
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">QRIS BLEU CIEL</div>
+                    <div style="font-size: 0.9rem; text-align: center; line-height: 1.4;">
+                        Gambar QRIS akan ditampilkan di sini<br>
+                        <small style="color: #a0aec0;">(Upload gambar QRIS Anda)</small>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;"><strong>BLEU CIEL</strong></p>
+                    <p style="font-size: 0.8rem; color: #666;">NMID: ID102433127932 | A01</p>
+                    <p style="font-size: 0.9rem; color: #33578D; font-weight: 600; margin-top: 1rem;">Scan dengan aplikasi e-wallet atau mobile banking Anda</p>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h3 class="summary-title">Order Summary</h3>
+                <div class="summary-item">
+                    <span>Item:</span>
+                    <span id="paymentItem"></span>
+                </div>
+                <div class="summary-item">
+                    <span>Variant:</span>
+                    <span id="paymentVariant"></span>
+                </div>
+                <div class="summary-item">
+                    <span>Quantity:</span>
+                    <span id="paymentQuantity"></span>
+                </div>
+                <div class="summary-item">
+                    <span>WhatsApp:</span>
+                    <span id="paymentWhatsapp"></span>
+                </div>
+                <div class="summary-item">
+                    <span>Special Request:</span>
+                    <span id="paymentRequest"></span>
+                </div>
+                <div class="summary-item">
+                    <span><strong>Total:</strong></span>
+                    <span id="paymentTotal"></span>
+                </div>
+            </div>
+
+            <div class="payment-buttons">
+                <button class="back-btn" onclick="backToOrder()">Back to Order</button>
+                <button class="confirm-btn" onclick="confirmPayment()">I Have Paid</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Page -->
+    <div id="invoicePage" class="invoice-page">
+        <div class="invoice-container">
+            <div class="invoice-header">
+                <div class="success-icon">✓</div>
+                <h2 class="invoice-title">Payment Successful!</h2>
+                <p>Thank you for your order. Your invoice has been sent to WhatsApp.</p>
+            </div>
+
+            <div class="invoice-details">
+                <h3 class="summary-title">Invoice Details</h3>
+                <div class="invoice-row">
+                    <span>Order ID:</span>
+                    <span id="orderId"></span>
+                </div>
+                <div class="invoice-row">
+                    <span>Date:</span>
+                    <span id="orderDate"></span>
+                </div>
+                <div class="invoice-row">
+                    <span>Item:</span>
+                    <span id="invoiceItem"></span>
+                </div>
+                <div class="invoice-row">
+                    <span>Variant:</span>
+                    <span id="invoiceVariant"></span>
+                </div>
+                <div class="invoice-row">
+                    <span>Quantity:</span>
+                    <span id="invoiceQuantity"></span>
+                </div>
+                <div class="invoice-row">
+                    <span>Special Request:</span>
+                    <span id="invoiceRequest"></span>
+                </div>
+                <div class="invoice-row">
+                    <span><strong>Total Paid:</strong></span>
+                    <span id="invoiceTotal"></span>
+                </div>
+            </div>
+
+            <button class="new-order-btn" onclick="newOrder()">Order Again</button>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        
+        const menuItems = [
+            'Espresso', 'Cafe Latte', 'Shaken Americano', 'Mochaccino', 'Matcha Coffee',
+            'Caramel Latte', 'Cafe Latte Gula Aren', 'Orange Coffee', 'Oat Matcha Latte', 
+            'Chocolate', 'Chocolate Mint'
+        ];
+
+        // Function to search and navigate to item
+        function searchAndNavigate(query) {
+            if (!query) return;
+            
+            const matchedItem = menuItems.find(item => 
+                item.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            if (matchedItem) {
+                selectItem(matchedItem);
+                searchInput.value = matchedItem;
+            } else {
+                // Show not found message briefly
+                const tempResults = document.createElement('div');
+                tempResults.className = 'search-results';
+                tempResults.style.display = 'block';
+                tempResults.style.background = '#FED7D7';
+                tempResults.style.color = '#E53E3E';
+                tempResults.innerHTML = '<div class="search-result-item">❌ Minuman tidak ditemukan</div>';
+                searchInput.parentNode.appendChild(tempResults);
+                
+                setTimeout(() => {
+                    tempResults.remove();
+                }, 2000);
+            }
+            
+            searchResults.style.display = 'none';
+        }
+
+        // Handle Enter key press
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = e.target.value.trim();
+                searchAndNavigate(query);
+            }
+        });
+
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            
+            if (query.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            const filteredItems = menuItems.filter(item => 
+                item.toLowerCase().includes(query)
+            );
+
+            if (filteredItems.length > 0) {
+                searchResults.innerHTML = filteredItems.map((item, index) => 
+                    `<div class="search-result-item" onclick="selectItem('${item}')" ${index === 0 ? 'style="background: #F7FAFC;"' : ''}>${item}</div>`
+                ).join('');
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item" style="color: #E53E3E;">❌ Minuman tidak ditemukan</div>';
+                searchResults.style.display = 'block';
+            }
+        });
+
+        function selectItem(item) {
+            searchInput.value = item;
+            searchResults.style.display = 'none';
+            
+            // First scroll to menu section
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+            
+            // Then find and highlight the specific item
+            setTimeout(() => {
+                const menuItemElements = document.querySelectorAll('.menu-item');
+                let found = false;
+                
+                menuItemElements.forEach(menuItemElement => {
+                    const itemName = menuItemElement.querySelector('.item-name').textContent;
+                    if (itemName === item) {
+                        found = true;
+                        
+                        // Scroll to the specific item within the menu section
+                        menuItemElement.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                        
+                        // Add highlight animation
+                        menuItemElement.style.background = 'linear-gradient(135deg, #667eea, #764ba2)';
+                        menuItemElement.style.color = 'white';
+                        menuItemElement.style.transform = 'scale(1.03)';
+                        menuItemElement.style.borderRadius = '16px';
+                        menuItemElement.style.boxShadow = '0 10px 25px rgba(102, 126, 234, 0.4)';
+                        menuItemElement.style.transition = 'all 0.3s ease';
+                        
+                        // Change button color for better contrast
+                        const infoBtn = menuItemElement.querySelector('.info-btn');
+                        if (infoBtn) {
+                            infoBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+                            infoBtn.style.color = 'white';
+                            infoBtn.style.border = '1px solid rgba(255, 255, 255, 0.3)';
+                        }
+                        
+                        // Reset after animation
+                        setTimeout(() => {
+                            menuItemElement.style.background = '';
+                            menuItemElement.style.color = '';
+                            menuItemElement.style.transform = '';
+                            menuItemElement.style.borderRadius = '';
+                            menuItemElement.style.boxShadow = '';
+                            
+                            if (infoBtn) {
+                                infoBtn.style.background = '';
+                                infoBtn.style.color = '';
+                                infoBtn.style.border = '';
+                            }
+                        }, 3000);
+                    }
+                });
+                
+                if (!found) {
+                    console.log('Item not found in menu');
+                }
+            }, 800);
+        }
+
+        // Cart System Variables
+        let cart = [];
+        let cartCount = 0;
+
+        // Modal functionality
+        function showInfo(title, description) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDescription').textContent = description;
+            document.getElementById('infoModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        // Cart Functions
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount = totalItems;
+            document.getElementById('cartCount').textContent = cartCount;
+        }
+
+        function openCart() {
+            renderCartItems();
+            document.getElementById('cartModal').style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function addToCart(item) {
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(cartItem => 
+                cartItem.item === item.item && 
+                cartItem.variant === item.variant && 
+                cartItem.request === item.request
+            );
+
+            if (existingItemIndex !== -1) {
+                // Update quantity if item exists
+                cart[existingItemIndex].quantity += item.quantity;
+            } else {
+                // Add new item to cart
+                cart.push({
+                    id: Date.now() + Math.random(),
+                    ...item
+                });
+            }
+
+            updateCartCount();
+            
+            // Show success message
+            showSuccessMessage(`${item.item} added to cart!`);
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartCount();
+            renderCartItems();
+        }
+
+        function updateCartItemQuantity(itemId, change) {
+            const itemIndex = cart.findIndex(item => item.id === itemId);
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity += change;
+                if (cart[itemIndex].quantity <= 0) {
+                    removeFromCart(itemId);
+                } else {
+                    updateCartCount();
+                    renderCartItems();
+                }
+            }
+        }
+
+        function calculateCartTotal() {
+            return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+
+        function renderCartItems() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartSummary = document.getElementById('cartSummary');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            if (cart.length === 0) {
+                cartItemsContainer.style.display = 'none';
+                cartEmpty.style.display = 'block';
+                cartSummary.style.display = 'none';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            cartEmpty.style.display = 'none';
+            cartItemsContainer.style.display = 'block';
+            cartSummary.style.display = 'block';
+            checkoutBtn.disabled = false;
+
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <div class="cart-item-info">
+                            <h4>${item.item}</h4>
+                            <div class="cart-item-details">
+                                <span>🌡️ ${item.variant}</span>
+                                ${item.request !== 'No special request' ? `<span>📝 ${item.request}</span>` : ''}
+                            </div>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${item.id})">Remove</button>
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="cart-item-quantity">
+                            <button class="cart-qty-btn" onclick="updateCartItemQuantity(${item.id}, -1)">-</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="cart-qty-btn" onclick="updateCartItemQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <div class="cart-item-price">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = calculateCartTotal();
+            document.getElementById('cartSubtotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById('cartTotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function showSuccessMessage(message) {
+            // Create and show success notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: #48BB78;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                z-index: 3000;
+                font-weight: 600;
+                box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // Purchase Modal Functions (Updated for Cart)
+        function openPurchaseModal(itemName, price, hasVariants) {
+            currentOrder.item = itemName;
+            currentOrder.hasVariants = hasVariants;
+            currentOrder.quantity = 1;
+            
+            if (hasVariants) {
+                currentOrder.prices = price;
+                document.getElementById('variantGroup').style.display = 'block';
+                // Default to hot
+                selectVariant('hot');
+            } else {
+                currentOrder.price = price;
+                currentOrder.variant = itemName === 'Orange Coffee' ? 'Iced' : 'Regular';
+                document.getElementById('variantGroup').style.display = 'none';
+                updateTotalPrice();
+            }
+            
+            document.getElementById('selectedItem').textContent = itemName;
+            document.getElementById('quantity').textContent = '1';
+            document.getElementById('specialRequest').value = '';
+            
+            // Reset variant selection
+            document.querySelectorAll('.variant-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.getElementById('purchaseModal').style.display = 'block';
+        }
+
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
+        }
+
+        // Updated Form Submission for Add to Cart
+        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const request = document.getElementById('specialRequest').value;
+            
+            if (currentOrder.hasVariants && !currentOrder.variant) {
+                alert('Please select Hot or Iced');
+                return;
+            }
+            
+            const cartItem = {
+                item: currentOrder.item,
+                variant: currentOrder.variant,
+                quantity: currentOrder.quantity,
+                price: currentOrder.price,
+                request: request || 'No special request'
+            };
+            
+            addToCart(cartItem);
+            closePurchaseModal();
+            
+            // Reset form
+            currentOrder = {
+                item: '',
+                variant: '',
+                quantity: 1,
+                price: 0,
+                whatsapp: '',
+                request: '',
+                hasVariants: false,
+                prices: {}
+            };
+        });
+
+        // Checkout Functions
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            
+            closeCart();
+            
+            // Populate checkout modal
+            const checkoutItems = document.getElementById('checkoutItems');
+            const total = calculateCartTotal();
+            
+            checkoutItems.innerHTML = cart.map(item => `
+                <div class="summary-row">
+                    <span>${item.item} (${item.variant}) x${item.quantity}</span>
+                    <span>Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('checkoutTotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+            document.getElementById('checkoutModal').style.display = 'block';
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        // Checkout Form Submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const whatsapp = document.getElementById('checkoutWhatsapp').value;
+            
+            if (!whatsapp) {
+                alert('Please enter your WhatsApp number');
+                return;
+            }
+            
+            // Prepare order data for payment
+            currentOrder = {
+                whatsapp: whatsapp,
+                items: [...cart],
+                total: calculateCartTotal()
+            };
+            
+            proceedToPaymentFromCart();
+        });
+
+        function proceedToPaymentFromCart() {
+            closeCheckoutModal();
+            
+            // Update payment page for multiple items
+            const itemsList = currentOrder.items.map(item => 
+                `${item.item} (${item.variant}) x${item.quantity}`
+            ).join(', ');
+            
+            document.getElementById('paymentItem').textContent = itemsList;
+            document.getElementById('paymentVariant').textContent = `${currentOrder.items.length} items`;
+            document.getElementById('paymentQuantity').textContent = currentOrder.items.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('paymentWhatsapp').textContent = currentOrder.whatsapp;
+            document.getElementById('paymentRequest').textContent = 'Multiple items - see details in invoice';
+            document.getElementById('paymentTotal').textContent = `Rp ${currentOrder.total.toLocaleString('id-ID')}`;
+            
+            // Show payment page
+            document.getElementById('paymentPage').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Start timer
+            startPaymentTimer();
+        }
+
+        // Updated WhatsApp Invoice for Multiple Items
+        function sendWhatsAppInvoiceFromCart(orderId, orderDate) {
+            const itemsList = currentOrder.items.map(item => 
+                `☕ ${item.item} (${item.variant}) x${item.quantity} - Rp ${(item.price * item.quantity).toLocaleString('id-ID')}${item.request !== 'No special request' ? `\n   📝 ${item.request}` : ''}`
+            ).join('\n');
+
+            const message = `🧾 *BLEU CIEL BREW - INVOICE*
+
+📋 Order ID: ${orderId}
+📅 Date: ${orderDate}
+
+${itemsList}
+
+💰 Total: Rp ${currentOrder.total.toLocaleString('id-ID')}
+
+Thank you for your order! Your drinks will be prepared shortly.
+
+*Bleu Ciel Brew*
+📍 Renjana, APL TOWER 5th Floor
+🏢 Podomoro University`;
+
+            const whatsappUrl = `https://wa.me/${currentOrder.whatsapp}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Purchase System Variables (keeping existing for single item purchase)
+        let currentOrder = {
+            item: '',
+            variant: '',
+            quantity: 1,
+            price: 0,
+            whatsapp: '',
+            request: '',
+            hasVariants: false,
+            prices: {}
+        };
+
+        let paymentTimer;
+        let timeRemaining = 600; // 10 minutes in seconds
+
+        function selectVariant(variant) {
+            currentOrder.variant = variant;
+            currentOrder.price = currentOrder.prices[variant];
+            
+            // Update UI
+            document.querySelectorAll('.variant-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-variant="${variant}"]`).classList.add('selected');
+            
+            updateTotalPrice();
+        }
+
+        function changeQuantity(change) {
+            const newQuantity = currentOrder.quantity + change;
+            if (newQuantity >= 1 && newQuantity <= 99) {
+                currentOrder.quantity = newQuantity;
+                document.getElementById('quantity').textContent = newQuantity;
+                updateTotalPrice();
+            }
+        }
+
+        function updateTotalPrice() {
+            const total = currentOrder.price * currentOrder.quantity;
+            document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        // Payment Functions (Updated to handle both cart and single items)
+        function startPaymentTimer() {
+            timeRemaining = 600; // Reset to 10 minutes
+            
+            paymentTimer = setInterval(() => {
+                timeRemaining--;
+                
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                document.getElementById('paymentTimer').textContent = 
+                    `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(paymentTimer);
+                    alert('Payment time expired. Please try again.');
+                    backToOrder();
+                }
+            }, 1000);
+        }
+
+        function backToOrder() {
+            clearInterval(paymentTimer);
+            document.getElementById('paymentPage').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Check if coming from cart or single item
+            if (currentOrder.items) {
+                // Coming from cart
+                openCart();
+            } else {
+                // Coming from single item
+                openPurchaseModal(currentOrder.item, 
+                    currentOrder.hasVariants ? currentOrder.prices : currentOrder.price, 
+                    currentOrder.hasVariants);
+            }
+        }
+
+        function confirmPayment() {
+            clearInterval(paymentTimer);
+            
+            // Generate order ID
+            const orderId = 'BC' + Date.now().toString().slice(-6);
+            const orderDate = new Date().toLocaleDateString('id-ID');
+            
+            if (currentOrder.items) {
+                // Multiple items from cart
+                updateInvoicePageFromCart(orderId, orderDate);
+                sendWhatsAppInvoiceFromCart(orderId, orderDate);
+                
+                // Clear cart after successful payment
+                cart = [];
+                updateCartCount();
+            } else {
+                // Single item
+                updateInvoicePageSingle(orderId, orderDate);
+                sendWhatsAppInvoice(orderId, orderDate, currentOrder.price * currentOrder.quantity);
+            }
+            
+            // Show invoice page
+            document.getElementById('paymentPage').style.display = 'none';
+            document.getElementById('invoicePage').style.display = 'block';
+        }
+
+        function updateInvoicePageFromCart(orderId, orderDate) {
+            document.getElementById('orderId').textContent = orderId;
+            document.getElementById('orderDate').textContent = orderDate;
+            
+            const itemsList = currentOrder.items.map(item => 
+                `${item.item} (${item.variant}) x${item.quantity}`
+            ).join(', ');
+            
+            document.getElementById('invoiceItem').textContent = itemsList;
+            document.getElementById('invoiceVariant').textContent = `${currentOrder.items.length} different items`;
+            document.getElementById('invoiceQuantity').textContent = currentOrder.items.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('invoiceRequest').textContent = 'Multiple items - details sent via WhatsApp';
+            document.getElementById('invoiceTotal').textContent = `Rp ${currentOrder.total.toLocaleString('id-ID')}`;
+        }
+
+        function updateInvoicePageSingle(orderId, orderDate) {
+            document.getElementById('orderId').textContent = orderId;
+            document.getElementById('orderDate').textContent = orderDate;
+            document.getElementById('invoiceItem').textContent = currentOrder.item;
+            document.getElementById('invoiceVariant').textContent = currentOrder.variant;
+            document.getElementById('invoiceQuantity').textContent = currentOrder.quantity;
+            document.getElementById('invoiceRequest').textContent = currentOrder.request;
+            
+            const total = currentOrder.price * currentOrder.quantity;
+            document.getElementById('invoiceTotal').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function sendWhatsAppInvoice(orderId, orderDate, total) {
+            const message = `🧾 *BLEU CIEL BREW - INVOICE*
+
+📋 Order ID: ${orderId}
+📅 Date: ${orderDate}
+
+☕ Item: ${currentOrder.item}
+🌡️ Variant: ${currentOrder.variant}
+📦 Quantity: ${currentOrder.quantity}
+💰 Total: Rp ${total.toLocaleString('id-ID')}
+
+📝 Special Request: ${currentOrder.request}
+
+Thank you for your order! Your drink will be prepared shortly.
+
+*Bleu Ciel Brew*
+📍 Renjana, APL TOWER 5th Floor
+🏢 Podomoro University`;
+
+            const whatsappUrl = `https://wa.me/${currentOrder.whatsapp}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function newOrder() {
+            document.getElementById('invoicePage').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // Reset order
+            currentOrder = {
+                item: '',
+                variant: '',
+                quantity: 1,
+                price: 0,
+                whatsapp: '',
+                request: '',
+                hasVariants: false,
+                prices: {}
+            };
+            
+            // Scroll to menu
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Navigation active state
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const sections = document.querySelectorAll('section[id]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Close modal and search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchResults.style.display = 'none';
+            }
+            
+            const modal = document.getElementById('infoModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.borderBottom = '1px solid rgba(0,0,0,0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.borderBottom = '1px solid rgba(0,0,0,0.05)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.menu-category').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bleu Ciel Brew - Premium Coffee Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            scroll-behavior: smooth;
+            background: #FBF9F7;
+        }
+
+        /* Coffee Bean Decorations */
+        .coffee-beans {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle at 30% 30%, #8B4513, #654321);
+            border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .coffee-beans::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 12px;
+            background: #3D2914;
+            border-radius: 1px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Coffee Pattern Background */
+        .coffee-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #8B4513 2px, transparent 2px),
+                radial-gradient(circle at 75px 75px, #654321 1px, transparent 1px);
+            background-size: 100px 100px;
+            pointer-events: none;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(51, 87, 141, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #33578D;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #F5E6D3;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-bar {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            width: 200px;
+            background: rgba(245, 230, 211, 0.2);
+            color: white;
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            position: relative;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Home Section */
+        #home {
+            background: linear-gradient(135deg, #33578D, #4A6FA5);
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #F5E6D3;
+            color: #33578D;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* About Section */
+        #about {
+            background: #F5E6D3;
+        }
+
+        .about-content {
+            text-align: center;
+        }
+
+        .about-content h2 {
+            font-size: 3rem;
+            color: #33578D;
+            margin-bottom: 2rem;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* Menu Section */
+        #menu {
+            background: #FBF9F7;
+        }
+
+        .menu-content h2 {
+            font-size: 3rem;
+            color: #33578D;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .menu-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 3rem;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, #F5E6D3, #EDD5B7);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 2px solid #D4AF7A;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-card h3 {
+            font-size: 2rem;
+            color: #33578D;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .menu-items {
+            list-style: none;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 15px;
+            border-left: 4px solid #33578D;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #33578D;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .item-variants {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .variant {
+            background: #33578D;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .item-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-button {
+            background: #F5E6D3;
+            color: #33578D;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-button:hover {
+            background: #33578D;
+            color: white;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #F5E6D3;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #33578D;
+        }
+
+        /* Location Section */
+        #location {
+            background: linear-gradient(135deg, #33578D, #4A6FA5);
+            color: white;
+            text-align: center;
+        }
+
+        .location-content h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .location-info {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .location-info p {
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #F5E6D3;
+            text-align: center;
+        }
+
+        .contact-content h2 {
+            font-size: 3rem;
+            color: #33578D;
+            margin-bottom: 2rem;
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-button:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Search Results */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #F5E6D3;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1001;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #D4AF7A;
+            cursor: pointer;
+            color: #33578D;
+            transition: background 0.3s ease;
+        }
+
+        .search-result-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .search-bar {
+                width: 150px;
+            }
+            
+            .menu-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .logo-text {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="coffee-pattern"></div>
+    
+    <header>
+        <nav>
+            <div class="logo-container">
+                <div class="logo-image">BC</div>
+                <a href="#home" class="logo-text">BLEU CIEL BREW</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#location">Location</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Cari minuman..." id="searchInput">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home">
+            <div class="coffee-beans" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+            <div class="coffee-beans" style="top: 70%; right: 15%; animation-delay: 2s;"></div>
+            <div class="coffee-beans" style="top: 40%; right: 25%; animation-delay: 4s;"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1>BLEU CIEL BREW</h1>
+                    <p>Premium Coffee Experience oleh Mahasiswa Podomoro</p>
+                    <a href="#menu" class="cta-button">Jelajahi Menu</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <div class="about-content">
+                    <h2>Tentang Kami</h2>
+                    <p>
+                        Bleu Ciel Brew adalah merek yang diciptakan oleh mahasiswa Podomoro University 
+                        yang menyajikan berbagai pilihan beverage berupa coffee dan non-coffee. 
+                        Kami berkomitmen untuk memberikan pengalaman minum yang istimewa dengan 
+                        kualitas premium dan cita rasa yang dapat divariasikan sesuai selera Anda. 
+                        Setiap cangkir yang kami sajikan dibuat dengan penuh passion dan dedikasi 
+                        untuk memberikan pengalaman terbaik bagi para penikmat kopi dan minuman berkualitas.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu">
+            <div class="container">
+                <div class="menu-content">
+                    <h2>Menu Kami</h2>
+                    <div class="menu-categories">
+                        <div class="category-card">
+                            <h3>☕ Coffee</h3>
+                            <ul class="menu-items">
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Espresso</span>
+                                        <span class="item-price">Rp 5.000</span>
+                                    </div>
+                                    <div class="item-description">Menggunakan biji kopi 100% Arabica</div>
+                                    <button class="info-button" onclick="showInfo('Espresso', 'Kopi espresso murni menggunakan biji kopi 100% Arabica yang dipanggang dengan sempurna untuk memberikan rasa yang kuat dan aroma yang menggugah selera.')">Info</button>
+                                </li>
+                                
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Cafe Latte</span>
+                                        <span class="item-price">Hot: Rp 15.000 | Iced: Rp 18.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Susu UHT dan espresso</div>
+                                    <button class="info-button" onclick="showInfo('Cafe Latte', 'Perpaduan sempurna antara espresso berkualitas tinggi dengan susu UHT yang creamy, menghasilkan rasa yang lembut dan balance.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Shaken Americano</span>
+                                        <span class="item-price">Hot: Rp 12.000 | Iced: Rp 16.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Espresso yang dishake memiliki foam diatasnya</div>
+                                    <button class="info-button" onclick="showInfo('Shaken Americano', 'Espresso yang di-shake dengan teknik khusus menghasilkan foam alami di atasnya, memberikan tekstur yang unik dan rasa yang lebih smooth.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Mochaccino</span>
+                                        <span class="item-price">Hot: Rp 18.000 | Iced: Rp 20.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Espresso dan coklat dan susu UHT</div>
+                                    <button class="info-button" onclick="showInfo('Mochaccino', 'Kombinasi harmonis antara espresso, coklat premium, dan susu UHT yang menghasilkan cita rasa manis dan pahit yang seimbang.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Matcha Coffee</span>
+                                        <span class="item-price">Hot: Rp 22.000 | Iced: Rp 25.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Espresso dan matcha dan oat</div>
+                                    <button class="info-button" onclick="showInfo('Matcha Coffee', 'Fusion unik antara espresso dengan matcha premium dan susu oat, menciptakan rasa yang eksotis dan creamy dengan sentuhan Jepang.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Caramel Latte</span>
+                                        <span class="item-price">Hot: Rp 20.000 | Iced: Rp 23.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Caramel dan espresso</div>
+                                    <button class="info-button" onclick="showInfo('Caramel Latte', 'Espresso berkualitas tinggi yang dipadukan dengan caramel sauce yang kaya, menghasilkan rasa manis yang indulgent.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Cafe Latte Gula Aren</span>
+                                        <span class="item-price">Hot: Rp 20.000 | Iced: Rp 23.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Gula aren dan espresso</div>
+                                    <button class="info-button" onclick="showInfo('Cafe Latte Gula Aren', 'Cita rasa tradisional Indonesia dengan espresso yang dipermanis menggunakan gula aren asli, memberikan rasa manis alami yang khas.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Orange Coffee</span>
+                                        <span class="item-price">Iced: Rp 18.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Iced Only</span>
+                                    </div>
+                                    <div class="item-description">Orange sunkist dan espresso</div>
+                                    <button class="info-button" onclick="showInfo('Orange Coffee', 'Inovasi segar dengan perpaduan espresso dan orange sunkist yang memberikan sensasi citrus yang menyegarkan dan unik.')">Info</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="category-card">
+                            <h3>🥤 Non Coffee</h3>
+                            <ul class="menu-items">
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Oat Matcha Latte</span>
+                                        <span class="item-price">Hot: Rp 22.000 | Iced: Rp 25.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Matcha dan susu oat</div>
+                                    <button class="info-button" onclick="showInfo('Oat Matcha Latte', 'Matcha premium Jepang yang dipadukan dengan susu oat yang creamy, menciptakan minuman yang sehat dan nikmat.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Chocolate</span>
+                                        <span class="item-price">Hot: Rp 18.000 | Iced: Rp 20.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Coklat dan susu UHT</div>
+                                    <button class="info-button" onclick="showInfo('Chocolate', 'Coklat premium yang dipadukan dengan susu UHT untuk menghasilkan minuman coklat yang kaya dan creamy.')">Info</button>
+                                </li>
+
+                                <li class="menu-item">
+                                    <div class="item-header">
+                                        <span class="item-name">Chocolate Mint</span>
+                                        <span class="item-price">Hot: Rp 20.000 | Iced: Rp 23.000</span>
+                                    </div>
+                                    <div class="item-variants">
+                                        <span class="variant">Hot</span>
+                                        <span class="variant">Iced</span>
+                                    </div>
+                                    <div class="item-description">Coklat dan mint</div>
+                                    <button class="info-button" onclick="showInfo('Chocolate Mint', 'Perpaduan coklat premium dengan mint segar yang memberikan sensasi dingin dan menyegarkan di setiap tegukan.')">Info</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section id="location">
+            <div class="container">
+                <div class="location-content">
+                    <h2>Lokasi Kami</h2>
+                    <div class="location-info">
+                        <p><strong>📍 Renjana</strong></p>
+                        <p>APL TOWER 5th Floor</p>
+                        <p>Podomoro University</p>
+                        <p style="margin-top: 2rem; font-size: 1.1rem; opacity: 0.9;">
+                            Kunjungi kami untuk merasakan pengalaman kopi yang tak terlupakan!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <h2>Hubungi Kami</h2>
+                    <p style="margin-bottom: 2rem; font-size: 1.2rem; color: #555;">
+                        Ada pertanyaan atau ingin memesan? Chat kami sekarang!
+                    </p>
+                    <a href="https://wa.me/6287823551636" class="whatsapp-button" target="_blank">
+                        💬 Chat WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        
+        const menuItems = [
+            'Espresso', 'Cafe Latte', 'Shaken Americano', 'Mochaccino', 'Matcha Coffee',
+            'Caramel Latte', 'Cafe Latte Gula Aren', 'Orange Coffee', 'Oat Matcha Latte', 
+            'Chocolate', 'Chocolate Mint'
+        ];
+
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            
+            if (query.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            const filteredItems = menuItems.filter(item => 
+                item.toLowerCase().includes(query)
+            );
+
+            if (filteredItems.length > 0) {
+                searchResults.innerHTML = filteredItems.map(item => 
+                    `<div class="search-result-item" onclick="selectItem('${item}')">${item}</div>`
+                ).join('');
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item">Minuman tidak ditemukan</div>';
+                searchResults.style.display = 'block';
+            }
+        });
+
+        function selectItem(item) {
+            searchInput.value = item;
+            searchResults.style.display = 'none';
+            
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+            
+            setTimeout(() => {
+                const menuItems = document.querySelectorAll('.menu-item');
+                menuItems.forEach(menuItem => {
+                    const itemName = menuItem.querySelector('.item-name').textContent;
+                    if (itemName === item) {
+                        menuItem.style.background = 'rgba(51, 87, 141, 0.2)';
+                        menuItem.style.transform = 'scale(1.02)';
+                        setTimeout(() => {
+                            menuItem.style.background = '';
+                            menuItem.style.transform = '';
+                        }, 2000);
+                    }
+                });
+            }, 500);
+        }
+
+        // Modal functionality
+        function showInfo(title, description) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDescription').textContent = description;
+            document.getElementById('infoModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        // Hide search results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('infoModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(51, 87, 141, 0.98)';
+            } else {
+                header.style.background = 'rgba(51, 87, 141, 0.95)';
+            }
+        });
+
+        // Add entrance animations to sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add floating coffee beans
+        function createFloatingBean() {
+            const bean = document.createElement('div');
+            bean.className = 'coffee-beans';
+            bean.style.position = 'fixed';
+            bean.style.left = Math.random() * 100 + 'vw';
+            bean.style.animationDelay = Math.random() * 6 + 's';
+            bean.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(bean);
+
+            setTimeout(() => {
+                bean.remove();
+            }, 10000);
+        }
+
+        // Create floating beans periodically
+        setInterval(createFloatingBean, 3000);
+    </script>
+</body>
+</html>
